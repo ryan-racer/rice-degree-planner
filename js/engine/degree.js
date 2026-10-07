@@ -3,7 +3,7 @@
 // lazily loaded course details.
 
 import { courseMatchesSpec, courseLevel, deptOf, distGroupOf } from './match.js';
-import { gpaOf } from './grades.js';
+import { gpaOf, pointsFor } from './grades.js';
 
 const isTransfer = (c) => c.source === 'transfer';
 const plural = (n, one, many = `${one}s`) => (n === 1 ? one : many);
@@ -14,7 +14,7 @@ const plural = (n, one, many = `${one}s`) => (n === 1 ? one : many);
  */
 export function programNotes(result, school) {
   const cfg = school?.degree || {}, used = result.usedCourses, out = [];
-  const g = gpaOf(used.filter((c) => !isTransfer(c)));
+  const g = gpaOf(used.filter((c) => !isTransfer(c)), pointsFor(school));
   if (cfg.programMinGpa && g != null && g < cfg.programMinGpa) out.push(`GPA across the courses applied here is ${g.toFixed(2)}; at least ${cfg.programMinGpa.toFixed(2)} is required.`);
   if (cfg.residency && result.program.kind === 'major') {
     const hrs = (cs) => cs.reduce((a, c) => a + (c.hours || 0), 0);
@@ -93,7 +93,7 @@ export async function auditDegree({ school, courses, programs = [], loadDetails 
   const tally = (have, need = 0) => ({ have: round(have), need, satisfied: round(have) >= need });
   // Hours in residence only differ from total hours for students with transfer credit.
   const residency = cfg.residency && courses.some(isTransfer) ? { hours: tally(inResidence, cfg.residency.hours), upper: tally(upperInResidence, cfg.residency.upperLevelHours) } : null;
-  const gpa = gpaOf(courses.filter((c) => !isTransfer(c)));
+  const gpa = gpaOf(courses.filter((c) => !isTransfer(c)), pointsFor(school));
   if (cfg.minGpa && gpa != null && gpa < cfg.minGpa) note('gpa', `Cumulative GPA is ${gpa.toFixed(2)}; graduation requires at least ${cfg.minGpa.toFixed(2)}.`);
 
   return {

@@ -32,7 +32,7 @@ export function programCard(result, { expanded, declared, school, variant = 'row
         <div class="mt-0.5 truncate text-xs text-zinc-500" title="${esc(p.school)}">${p.hours ? `${p.hours} hrs · ` : ''}${n} course${n === 1 ? '' : 's'} apply</div>
       </div>
       <div class="hidden sm:block" title="${pct}% complete">
-        <div class="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800"><div class="h-full rounded-full ${done ? 'bg-emerald-500' : 'bg-blue-600 dark:bg-blue-500'}" style="width:${pct}%"></div></div>
+        <div class="h-1.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800"><div class="h-full rounded-full ${done ? 'bg-emerald-500' : 'bg-rice-700 dark:bg-rice-400'}" style="width:${pct}%"></div></div>
       </div>
       <div class="text-right">
         <div class="text-lg font-semibold tabular-nums leading-none">${done ? icon('i-check', 'inline size-5 text-emerald-600') : result.remaining}</div>
@@ -43,7 +43,7 @@ export function programCard(result, { expanded, declared, school, variant = 'row
     ${expanded ? `<div class="border-t border-zinc-200 px-4 pb-5 pt-3 dark:border-zinc-800">
       <div class="mb-2 flex flex-wrap items-center justify-end gap-x-4 gap-y-1 text-xs">
         <a class="inline-flex items-center gap-1 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100" href="${esc(p.url)}" target="_blank" rel="noopener">Catalog page ${icon('i-external', 'size-3')}</a>
-        <a class="font-medium text-blue-700 hover:underline dark:text-blue-400" href="#" data-action="${declared ? 'undeclare' : 'declare'}" data-id="${esc(p.id)}">${declared ? 'Remove from my programs' : 'Add to my programs'}</a>
+        <a class="font-medium text-rice-700 hover:underline dark:text-rice-300" href="#" data-action="${declared ? 'undeclare' : 'declare'}" data-id="${esc(p.id)}">${declared ? 'Remove from my programs' : 'Add to my programs'}</a>
       </div>
       ${policyNotes(result, school)}
       ${p.catalogNote ? `<p class="${NOTE}">${esc(p.catalogNote)}</p>` : ''}
@@ -103,7 +103,7 @@ function nodeHtml(n, school, depth) {
 const passFailText = (school, code) => (school.passFailNotice ? school.passFailNotice([code]) : `${code} was taken Pass/Fail; a major or minor may require the letter grade.`);
 
 function slotHtml(course, specs, school, prefix, label, ov = {}) {
-  const sub = EDIT && ov.key ? `<button type="button" class="shrink-0 text-[11px] font-medium text-blue-700 hover:underline dark:text-blue-400" data-ov-add="${esc(ov.key)}" data-prog="${esc(EDIT)}" title="Count one of your courses here (for advisor-approved substitutions)">Substitute</button>` : '';
+  const sub = EDIT && ov.key ? `<button type="button" class="shrink-0 text-[11px] font-medium text-rice-700 hover:underline dark:text-rice-300" data-ov-add="${esc(ov.key)}" data-prog="${esc(EDIT)}" title="Count one of your courses here (for advisor-approved substitutions)">Substitute</button>` : '';
   if (course) {
     const ip = course.status === 'in-progress';
     const planned = course.status === 'planned';
@@ -125,7 +125,7 @@ function slotHtml(course, specs, school, prefix, label, ov = {}) {
   const single = list.length === 1 && typeof list[0] === 'string' ? school.catalog?.[list[0]]?.title : '';
   const MAX = 6;
   const shown = labels.slice(0, MAX).join('<span class="text-zinc-400"> or </span>');
-  const rest = labels.length > MAX ? `<button type="button" class="more-opts ml-1 text-xs font-medium text-blue-700 hover:underline dark:text-blue-400" data-more="${esc(list.slice(MAX).map((s) => specLabel(s, null)).join(', '))}">+${labels.length - MAX} more</button>` : '';
+  const rest = labels.length > MAX ? `<button type="button" class="more-opts ml-1 text-xs font-medium text-rice-700 hover:underline dark:text-rice-300" data-more="${esc(list.slice(MAX).map((s) => specLabel(s, null)).join(', '))}">+${labels.length - MAX} more</button>` : '';
   return `<div class="flex items-center gap-2 py-1 text-sm">
     ${icon('i-circle', 'text-zinc-300 dark:text-zinc-600')}
     <span class="min-w-0 flex-1">${prefix ? `<span class="text-zinc-500">${esc(prefix)} from </span>` : ''}${shown}${rest}${single ? `<span class="ml-2 truncate text-zinc-500">${esc(titleCase(single))}</span>` : ''}</span>${sub}</div>`;

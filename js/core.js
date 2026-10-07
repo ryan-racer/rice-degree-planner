@@ -2,7 +2,7 @@
 // depend on each other. `school` is a live binding: call setSchool() to change it.
 import { schools, getSchool } from './schools/index.js';
 import { esc } from './ui/render.js';
-import { POINTS, gpaOf } from './engine/grades.js';
+import { POINTS, gpaOf, pointsFor } from './engine/grades.js';
 
 export const $ = (sel) => document.querySelector(sel);
 export let school = getSchool(localStorage.getItem('rf.school') || schools[0].id);
@@ -106,7 +106,7 @@ export function gradeClass(c) {
   if (c.status === 'in-progress') return 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300';
   if (c.status === 'failed') return 'bg-zinc-100 text-zinc-400 line-through dark:bg-zinc-800';
   const g = c.grade || '';
-  if (/^A/.test(g)) return 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300';
+  if (/^A/.test(g)) return 'bg-rice-50 text-rice-700 dark:bg-rice-950/60 dark:text-rice-200';
   if (/^B/.test(g)) return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300';
   if (/^C/.test(g)) return 'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300';
   if (/^[DF]/.test(g)) return 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300';
@@ -115,7 +115,7 @@ export function gradeClass(c) {
 
 export function hoursOf(c) { return Number.isFinite(c.hours) && c.hours >= 0 ? c.hours : (school.catalog?.[c.code]?.hours ?? school.defaultHours ?? 3); }
 
-export function gpa(courses) { return gpaOf(courses.map((c) => ({ ...c, hours: hoursOf(c) })))?.toFixed(2) ?? null; }
+export function gpa(courses) { return gpaOf(courses.map((c) => ({ ...c, hours: hoursOf(c) })), pointsFor(school))?.toFixed(2) ?? null; }
 
 const SEASONS = { Spring: 1, Summer: 2, Fall: 3 };
 

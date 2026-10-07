@@ -1,5 +1,7 @@
 # DegreePlanner
 
+> Rice-branded copy: Rice Blue header and accents with serif display type, a GPA tile with what-if grades, a one-click advising summary, and quick links to ESTHER and the General Announcements.
+
 A front-end-only degree audit and program explorer. Drop in your transcript
 and it shows, DegreeWorks-style, how close you are to finishing your declared
 major(s), then ranks every other major and minor by how close you already are.

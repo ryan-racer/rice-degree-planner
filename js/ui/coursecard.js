@@ -122,7 +122,7 @@ function body(code, info, d, loading, sec) {
       ${off.chips.length ? `<div class="mt-1.5 flex flex-wrap gap-1">${off.chips.map((c) => `<span class="rounded px-1.5 py-px font-mono text-[10px] ${c.on ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-zinc-100 text-zinc-400 line-through dark:bg-zinc-800 dark:text-zinc-500'}">${esc(c.name)}</span>`).join('')}</div>` : ''}
     </div>` : ''}
     ${d?.x ? `<div class="mt-1.5 text-[11px] text-zinc-500">Cross-listed: ${esc(d.x)}</div>` : ''}
-    ${sec ? `<div class="mt-2 flex items-center justify-between gap-2 border-t border-zinc-200 pt-2 text-[11px] dark:border-zinc-800"><span class="text-zinc-600 dark:text-zinc-400">${esc(termName(sec.term))}: ${sec.count ? `${sec.count} section${sec.count === 1 ? '' : 's'} with set times` : 'no scheduled sections'}</span>${sec.count ? `<button type="button" class="font-medium text-blue-700 hover:underline dark:text-blue-400" data-find-sections="${esc(code)}">Find sections →</button>` : ''}</div>` : ''}`;
+    ${sec ? `<div class="mt-2 flex items-center justify-between gap-2 border-t border-zinc-200 pt-2 text-[11px] dark:border-zinc-800"><span class="text-zinc-600 dark:text-zinc-400">${esc(termName(sec.term))}: ${sec.count ? `${sec.count} section${sec.count === 1 ? '' : 's'} with set times` : 'no scheduled sections'}</span>${sec.count ? `<button type="button" class="font-medium text-rice-700 hover:underline dark:text-rice-300" data-find-sections="${esc(code)}">Find sections →</button>` : ''}</div>` : ''}`;
 }
 
 function prereqHtml(text) {

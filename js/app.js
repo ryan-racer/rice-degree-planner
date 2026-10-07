@@ -8,6 +8,7 @@ import { renderTimeline, initTimeline, renderSuggestions, prepared, scheduleSect
 import { parseTranscript } from './parser/transcript.js';
 import { pdfToText } from './parser/pdf.js';
 import { auditProgram, auditAll } from './engine/audit.js';
+import { buildSummary } from './engine/summary.js';
 import { programCard, esc, titleCase } from './ui/render.js';
 import { initCourseCards, setCourseCardSchool, setTakenCodes } from './ui/coursecard.js';
 import { initCourseAutocomplete, setAutocompleteSchool } from './ui/autocomplete.js';
@@ -31,7 +32,7 @@ function initChrome() {
   const sel = $('#school-select');
   sel.innerHTML = schools.map((s) => `<option value="${esc(s.id)}">${esc(s.name)}</option>`).join('');
   sel.value = school.id;
-  sel.classList.toggle('max-sm:hidden', schools.length < 2); // nothing to choose yet; the footer names the school
+  if (schools.length < 2) { sel.hidden = true; const sep = $('#school-sep'); if (sep) sep.hidden = true; }
   sel.addEventListener('change', () => {
     setSchool(getSchool(sel.value));
     setCourseCardSchool(school);
@@ -158,6 +159,20 @@ function initImport() {
     a.href = URL.createObjectURL(blob); a.download = `degreeplanner-${school.id}-${new Date().toISOString().slice(0, 10)}.json`;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+  $('#summary-btn').addEventListener('click', async () => {
+    const courses = prepared();
+    const ranked = auditAll(activePrograms().filter((p) => !state.declared.includes(p.id)), courses, state.overrides);
+    const text = buildSummary({ school, courses, declaredResults: runtime.declaredResults, degree: runtime.degree, ranked, catalogYear: activeYear(), date: new Date().toISOString().slice(0, 10) });
+    const done = () => setStatus('Summary copied to the clipboard. Paste it into an email to your advisor.', 'ok');
+    try { await navigator.clipboard.writeText(text); done(); }
+    catch {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch { setStatus('Could not copy automatically. Your browser blocked clipboard access.', 'error'); }
+      ta.remove();
+    }
   });
   $('#reset-btn').addEventListener('click', () => undoable('Everything was cleared.', resetAll));
   $('#include-ip').addEventListener('change', (e) => { state.includeInProgress = e.target.checked; save(); renderAll(); });

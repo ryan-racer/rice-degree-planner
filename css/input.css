@@ -5,18 +5,31 @@
 @theme {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Source Serif 4", Georgia, "Times New Roman", serif;
+  /* Rice Blue (#00205b) scale */
+  --color-rice-50: #eef2f8;
+  --color-rice-100: #dbe4f2;
+  --color-rice-200: #b9c9e4;
+  --color-rice-300: #8ba6d1;
+  --color-rice-400: #5b82bc;
+  --color-rice-500: #38639f;
+  --color-rice-600: #234b83;
+  --color-rice-700: #14386b;
+  --color-rice-800: #0a2c5b;
+  --color-rice-900: #00205b;
+  --color-rice-950: #001540;
 }
 
 @layer base {
   html { color-scheme: light; }
   html.dark { color-scheme: dark; }
   body { @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100; }
-  ::selection { @apply bg-blue-600/20; }
-  :focus-visible { @apply outline-2 outline-offset-2 outline-blue-600; }
+  ::selection { @apply bg-rice-600/20; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-rice-600; }
 }
 
 @media print {
-  header, footer, [role="tablist"], #print-btn, #reset-btn, #show-more, .seg, #search, #sort, #declare-select, #replace-btn, #edit-btn, #suggest-box, #add-term, .add-planned, .add-course, [data-action], .more-opts { display: none !important; }
+  header, footer, [role="tablist"], #print-btn, #summary-btn, #reset-btn, #show-more, .seg, #search, #sort, #declare-select, #replace-btn, #edit-btn, #suggest-box, #add-term, .add-planned, .add-course, [data-action], .more-opts, #gpa-toggle, #gpa-panel { display: none !important; }
   [data-panel][hidden] { display: block !important; }
   main { max-width: none; padding: 0; }
   .panel, .prog-head, .prog-head + div { break-inside: avoid; }
@@ -25,25 +38,25 @@
 }
 
 @layer components {
-  .btn { @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-zinc-300 bg-white px-3 text-sm font-medium text-zinc-800 whitespace-nowrap transition-colors hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800; }
-  .btn-primary { @apply border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white; }
+  .btn { @apply inline-flex h-9 items-center justify-center gap-1.5 rounded-md border border-zinc-300 bg-white px-3 text-sm font-medium text-zinc-800 whitespace-nowrap transition-colors hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rice-600 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800; }
+  .btn-primary { @apply border-rice-900 bg-rice-900 text-white hover:bg-rice-800 dark:border-rice-200 dark:bg-rice-200 dark:text-rice-950 dark:hover:bg-white; }
   .btn-ghost { @apply border-transparent bg-transparent hover:bg-zinc-100 dark:bg-transparent dark:hover:bg-zinc-800; }
   .btn-sm { @apply h-7 px-2 text-xs; }
   .btn-icon { @apply inline-flex size-9 items-center justify-center rounded-md text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100; }
-  .field { @apply h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500; }
+  .field { @apply h-9 rounded-md border border-zinc-300 bg-white px-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-rice-600 focus:outline-none focus:ring-2 focus:ring-rice-600/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500; }
   .field-sm { @apply h-7 px-1.5 text-xs; }
   .panel { @apply rounded-lg border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900; }
   .badge { @apply inline-flex items-center rounded px-1.5 py-px text-[10px] font-semibold uppercase tracking-wider; }
-  .badge-major { @apply bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300; }
+  .badge-major { @apply bg-rice-50 text-rice-800 dark:bg-rice-950 dark:text-rice-200; }
   .badge-minor { @apply bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300; }
   .badge-done { @apply bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300; }
   .seg { @apply inline-flex rounded-md border border-zinc-300 p-0.5 dark:border-zinc-700; }
   .seg button { @apply rounded px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100; }
-  .seg button.active { @apply bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900; }
+  .seg button.active { @apply bg-rice-900 text-white dark:bg-rice-200 dark:text-rice-950; }
   .tab-btn { @apply -mb-px inline-flex items-center border-b-2 border-transparent pb-2.5 pt-1 text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100; }
-  .tab-btn[aria-selected="true"] { @apply border-zinc-900 text-zinc-900 dark:border-zinc-100 dark:text-zinc-100; }
+  .tab-btn[aria-selected="true"] { @apply border-rice-900 text-rice-900 dark:border-rice-300 dark:text-rice-100; }
   .kbd { @apply rounded border border-zinc-300 bg-zinc-100 px-1 font-mono text-[11px] text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300; }
   .prose-muted { @apply text-sm leading-6 text-zinc-600 dark:text-zinc-400; }
   .dropzone { @apply rounded-lg border border-dashed border-zinc-300 bg-zinc-50/60 transition-colors hover:border-zinc-400 hover:bg-zinc-100/60 dark:border-zinc-700 dark:bg-zinc-900/40 dark:hover:border-zinc-500 dark:hover:bg-zinc-800/40; }
-  .dropzone.over { @apply border-blue-600 bg-blue-50 dark:bg-blue-950/40; }
+  .dropzone.over { @apply border-rice-600 bg-rice-50 dark:bg-rice-950/40; }
 }

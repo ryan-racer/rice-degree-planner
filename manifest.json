@@ -1,11 +1,11 @@
 {
-  "name": "DegreePlanner",
-  "short_name": "DegreePlanner",
-  "description": "Audit your degree, plan future terms, and build a semester schedule.",
+  "name": "Rice Degree Planner",
+  "short_name": "Rice Planner",
+  "description": "Audit your Rice degree, plan future terms, and build a semester schedule.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#fafafa",
-  "theme_color": "#18181b",
+  "background_color": "#ffffff",
+  "theme_color": "#00205b",
   "icons": [
     {
       "src": "icon.svg",

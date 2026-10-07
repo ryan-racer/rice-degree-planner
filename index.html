@@ -3,17 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DegreePlanner — Audit and plan your degree</title>
-<meta name="description" content="Upload your transcript to see how close you are to finishing your major, and which other majors and minors you are near completing.">
+<title>Rice Degree Planner — Audit your Rice degree</title>
+<meta name="description" content="Drop in your Rice transcript to see what your major still needs, which other majors and minors are within reach, and plan future terms.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<script>(function(){try{var t=localStorage.getItem('rf.theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}})();</script>
+<script>(function(){try{if(localStorage.getItem('rf.theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
-<meta name="apple-mobile-web-app-title" content="DegreePlanner">
+<meta name="theme-color" content="#00205b">
+<meta name="apple-mobile-web-app-title" content="Rice Degree Planner">
 <link rel="stylesheet" href="css/app.css">
 </head>
 <body class="flex min-h-full flex-col font-sans">
@@ -33,20 +32,21 @@
   <symbol id="i-external" viewBox="0 0 16 16"><path d="M7 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V9M9 2h5v5M14 2 7 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
-<header class="sticky top-0 z-20 border-b border-zinc-200 bg-white/90 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/80">
+<header class="sticky top-0 z-20 border-b border-white/10 bg-rice-900 text-white dark:bg-rice-950">
   <div class="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4">
     <div class="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-3">
-      <a href="./" class="flex shrink-0 items-center gap-2 text-[15px] font-semibold tracking-tight">
-        <span class="inline-flex size-6 items-center justify-center rounded bg-zinc-900 font-mono text-[13px] font-medium text-white dark:bg-zinc-100 dark:text-zinc-900">D</span>
-        DegreePlanner
+      <a href="./" class="flex shrink-0 items-center gap-2.5">
+        <span class="inline-flex size-7 items-center justify-center rounded bg-white font-display text-[19px] font-bold leading-none text-rice-900">R</span>
+        <span class="font-display text-[17px] font-semibold tracking-tight">Rice University</span>
       </a>
-      <span class="hidden text-zinc-300 sm:inline dark:text-zinc-700">/</span>
-      <select id="school-select" class="field h-8 min-w-0 shrink truncate border-transparent bg-transparent pr-7 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800" aria-label="School"></select>
-      <select id="year-select" class="field h-8 min-w-0 shrink truncate border-transparent bg-transparent pr-7 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800" aria-label="Catalog year" title="Requirements follow the catalog of the year you matriculated" hidden></select>
+      <span id="school-sep" class="hidden text-rice-400 sm:inline">/</span>
+      <select id="school-select" class="field h-8 min-w-0 shrink truncate border-transparent bg-transparent pr-7 font-medium text-white hover:bg-white/10" aria-label="School"></select>
+      <span class="hidden shrink-0 text-sm text-rice-200 md:inline">Degree Planner</span>
+      <select id="year-select" class="field h-8 min-w-0 shrink truncate border-white/20 bg-transparent pr-7 text-sm text-rice-100 hover:bg-white/10" aria-label="Catalog year" title="Requirements follow the catalog of the year you matriculated" hidden></select>
     </div>
     <div class="flex shrink-0 items-center gap-1">
-      <span class="mr-2 hidden text-xs text-zinc-500 md:inline">Nothing leaves your browser</span>
-      <button id="theme-toggle" class="btn-icon" type="button" aria-label="Toggle dark mode">
+      <span class="mr-2 hidden text-xs text-rice-200 md:inline">Nothing leaves your browser</span>
+      <button id="theme-toggle" class="btn-icon text-rice-100 hover:bg-white/10 hover:text-white" type="button" aria-label="Toggle dark mode">
         <svg class="size-[18px] dark:hidden"><use href="#i-moon"/></svg>
         <svg class="hidden size-[18px] dark:block"><use href="#i-sun"/></svg>
       </button>
@@ -59,20 +59,20 @@
 
   <!-- Intro / import -->
   <section id="intro" class="mx-auto max-w-2xl py-6 sm:py-14">
-    <p class="mb-3 font-mono text-xs font-medium uppercase tracking-widest text-zinc-500" id="intro-school"></p>
-    <h1 class="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Audit your degree.<br class="hidden sm:block"> See what else is within reach.</h1>
-    <p class="prose-muted mt-4 max-w-xl">Import your transcript to get a requirement-by-requirement audit of your major, then a ranked list of every other major and minor you are already close to finishing.</p>
+    <p class="mb-3 font-mono text-xs font-medium uppercase tracking-widest text-rice-700 dark:text-rice-300" id="intro-school"></p>
+    <h1 class="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">Audit your Rice degree.<br class="hidden sm:block"> See what else is within reach.</h1>
+    <p class="prose-muted mt-4 max-w-xl">Drop in your ESTHER unofficial transcript for a requirement-by-requirement audit of your major — plus a ranked list of every other Rice major and minor you are already close to finishing.</p>
 
     <div id="dropzone" class="dropzone mt-8 cursor-pointer p-8 text-center" tabindex="0" role="button" aria-label="Upload transcript">
-      <svg class="mx-auto size-6 text-zinc-400"><use href="#i-upload"/></svg>
+      <svg class="mx-auto size-6 text-rice-700 dark:text-rice-300"><use href="#i-upload"/></svg>
       <p class="mt-3 text-sm font-medium">Drop your unofficial transcript here</p>
-      <p class="mt-1 text-xs text-zinc-500">PDF, text, or a DegreePlanner backup · or click to browse</p>
+      <p class="mt-1 text-xs text-zinc-500">ESTHER PDF, pasted text, or a planner backup · or click to browse</p>
     </div>
 
     <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-      <button id="paste-toggle" class="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-600 dark:text-zinc-300 dark:decoration-zinc-600 dark:hover:decoration-zinc-300" type="button">Paste transcript text instead</button>
+      <button id="paste-toggle" class="font-medium text-rice-800 underline decoration-rice-200 underline-offset-4 hover:decoration-rice-700 dark:text-rice-200 dark:decoration-rice-700 dark:hover:decoration-rice-300" type="button">Paste transcript text instead</button>
       <span class="text-zinc-300 dark:text-zinc-700">·</span>
-      <button id="sample-btn" class="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4 hover:decoration-zinc-600 dark:text-zinc-300 dark:decoration-zinc-600 dark:hover:decoration-zinc-300" type="button">Load a sample</button>
+      <button id="sample-btn" class="font-medium text-rice-800 underline decoration-rice-200 underline-offset-4 hover:decoration-rice-700 dark:text-rice-200 dark:decoration-rice-700 dark:hover:decoration-rice-300" type="button">Load a sample</button>
     </div>
 
     <div id="paste-box" class="mt-4" hidden>
@@ -85,7 +85,7 @@
 
     <div id="intro-status" class="mt-4 text-sm" aria-live="polite"></div>
 
-    <p class="mt-10 border-t border-zinc-200 pt-6 text-xs leading-5 text-zinc-500 dark:border-zinc-800">Nothing leaves your browser.</p>
+    <p class="mt-10 border-t border-zinc-200 pt-6 text-xs leading-5 text-zinc-500 dark:border-zinc-800">Nothing leaves your browser. Estimates based on the General Announcements, not an official audit.</p>
   </section>
 
   <!-- Workspace -->
@@ -99,6 +99,7 @@
       <div class="flex items-center gap-3 pb-2">
         <p id="tab-summary" class="text-xs text-zinc-500"></p>
         <button id="export-btn" class="btn btn-ghost btn-sm text-zinc-500" type="button" title="Download a backup you can drop back onto the import screen on any device">Export</button>
+        <button id="summary-btn" class="btn btn-ghost btn-sm text-zinc-500" type="button" title="Copy a plain-text summary for your advisor">Copy summary</button>
         <button id="print-btn" class="btn btn-ghost btn-sm text-zinc-500" type="button" title="Print or save as PDF">Print</button>
         <button id="reset-btn" class="btn btn-ghost btn-sm text-zinc-500 hover:text-red-600 dark:hover:text-red-400" type="button" title="Remove the imported transcript, programs, and plan">Reset</button>
       </div>
@@ -107,7 +108,7 @@
     <section data-panel="schedule" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule" hidden>
       <div class="mb-3 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 class="text-lg font-semibold tracking-tight">Semester schedule</h2>
+          <h2 class="font-display text-lg font-semibold tracking-tight">Semester schedule</h2>
           <p class="text-xs text-zinc-500">Sections<span id="sched-asof"></span></p>
         </div>
         <div class="flex items-center gap-2">
@@ -143,14 +144,14 @@
           <div class="space-y-2 border-b border-zinc-200 p-3 dark:border-zinc-800">
             <input id="sched-search" type="search" class="field w-full" placeholder="Search code, title, or instructor" aria-label="Search sections">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-600 dark:text-zinc-400">
-              <label class="flex items-center gap-1.5"><input id="sched-fits" type="checkbox" class="size-3.5 accent-zinc-900 dark:accent-zinc-100" checked> Fits my schedule</label>
-              <label class="flex items-center gap-1.5"><input id="sched-needed" type="checkbox" class="size-3.5 accent-zinc-900 dark:accent-zinc-100"> Fills a requirement</label>
-              <label class="flex items-center gap-1.5"><input id="sched-hide-taken" type="checkbox" class="size-3.5 accent-zinc-900 dark:accent-zinc-100" checked> Hide taken</label>
+              <label class="flex items-center gap-1.5"><input id="sched-fits" type="checkbox" class="size-3.5 accent-rice-900 dark:accent-rice-200" checked> Fits my schedule</label>
+              <label class="flex items-center gap-1.5"><input id="sched-needed" type="checkbox" class="size-3.5 accent-rice-900 dark:accent-rice-200"> Fills a requirement</label>
+              <label class="flex items-center gap-1.5"><input id="sched-hide-taken" type="checkbox" class="size-3.5 accent-rice-900 dark:accent-rice-200" checked> Hide taken</label>
             </div>
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <div class="flex items-center gap-1.5"><span class="text-[11px] text-zinc-500">Distribution</span><div id="sched-dist" class="flex gap-1"></div></div>
               <select id="sched-earliest" class="field h-7 px-1.5 text-[11px]" aria-label="Earliest start"><option value="0">Any start time</option><option value="540">Starts 9a or later</option><option value="600">Starts 10a or later</option><option value="660">Starts 11a or later</option></select>
-              <label class="flex items-center gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400"><input id="sched-nofriday" type="checkbox" class="size-3.5 accent-zinc-900 dark:accent-zinc-100"> No Fridays</label>
+              <label class="flex items-center gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400"><input id="sched-nofriday" type="checkbox" class="size-3.5 accent-rice-900 dark:accent-rice-200"> No Fridays</label>
             </div>
             <p id="sched-count" class="text-[11px] text-zinc-500"></p>
           </div>
@@ -162,16 +163,16 @@
     <section class="panel" data-panel="planner" id="panel-planner" role="tabpanel" aria-labelledby="tab-planner">
       <div class="flex flex-wrap items-start justify-between gap-3 border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
         <div>
-          <h2 class="text-sm font-semibold">Timeline</h2>
+          <h2 class="font-display text-sm font-semibold">Timeline</h2>
           <p id="course-summary" class="mt-0.5 text-xs text-zinc-500"></p>
         </div>
         <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
           <input type="checkbox" id="include-ip" class="hidden" checked>
-          <label class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400"><input type="checkbox" id="include-planned" class="size-4 accent-zinc-900 dark:accent-zinc-100" checked> Planned counts</label>
+          <label class="flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-400"><input type="checkbox" id="include-planned" class="size-4 accent-rice-900 dark:accent-rice-200" checked> Planned counts</label>
           <div class="flex flex-wrap items-center gap-1">
             <select id="auto-target" class="field h-7 px-1.5 text-xs" aria-label="Graduation target for auto-plan" title="Finish by this term"></select>
             <select id="auto-hours" class="field h-7 px-1.5 text-xs" aria-label="Maximum credit hours per term for auto-plan" title="Maximum credit hours per term"><option value="12">12 hrs/term</option><option value="15">15 hrs/term</option><option value="16" selected>16 hrs/term</option><option value="18">18 hrs/term (max)</option></select>
-            <label class="flex items-center gap-1 text-xs text-zinc-600 dark:text-zinc-400" title="Let auto-plan use summer terms (8 hours at most)"><input type="checkbox" id="auto-summers" class="size-3.5 accent-zinc-900 dark:accent-zinc-100"> Summers</label>
+            <label class="flex items-center gap-1 text-xs text-zinc-600 dark:text-zinc-400" title="Let auto-plan use summer terms (8 hours at most)"><input type="checkbox" id="auto-summers" class="size-3.5 accent-rice-900 dark:accent-rice-200"> Summers</label>
             <button id="auto-btn" class="btn btn-sm" type="button" title="Add the courses your programs still require, placed by when they are offered and their prerequisites">Auto-plan</button>
             <button id="auto-clear" class="btn btn-ghost btn-sm text-zinc-500" type="button" hidden>Clear auto-plan</button>
           </div>
@@ -197,7 +198,7 @@
     <section>
       <div class="mb-3 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 class="text-lg font-semibold tracking-tight">Your programs</h2>
+          <h2 class="font-display text-lg font-semibold tracking-tight">Your programs</h2>
         </div>
         <select id="declare-select" class="field max-w-xs" aria-label="Add a program"></select>
       </div>
@@ -207,7 +208,7 @@
     <section>
       <div class="mb-3 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 class="text-lg font-semibold tracking-tight">Within reach</h2>
+          <h2 class="font-display text-lg font-semibold tracking-tight">Within reach</h2>
         </div>
         <div class="flex items-center gap-2">
           <div class="seg" role="group" aria-label="Filter by kind">
@@ -232,7 +233,7 @@
   </div>
 </main>
 
-<div id="drop-overlay" class="pointer-events-none fixed inset-0 z-50 hidden items-center justify-center bg-zinc-950/60 backdrop-blur-sm">
+<div id="drop-overlay" class="pointer-events-none fixed inset-0 z-50 hidden items-center justify-center bg-rice-950/70 backdrop-blur-sm">
   <div class="rounded-lg border border-dashed border-white/60 px-10 py-8 text-center text-white">
     <svg class="mx-auto size-7"><use href="#i-upload"/></svg>
     <p class="mt-3 text-sm font-medium">Drop to import transcript</p>
@@ -242,7 +243,7 @@
 <footer class="border-t border-zinc-200 dark:border-zinc-800">
   <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-4 py-4 text-xs text-zinc-500">
     <span id="foot-school"></span>
-    <span>Estimates based on the General Announcements, not an official audit. <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:decoration-zinc-700 dark:hover:text-zinc-200" href="docs/PROGRAM_FORMAT.md">Add a school or program</a></span>
+    <span><a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:decoration-zinc-700 dark:hover:text-zinc-200" href="https://esther.rice.edu/" target="_blank" rel="noopener">ESTHER</a> · <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:decoration-zinc-700 dark:hover:text-zinc-200" href="https://ga.rice.edu/" target="_blank" rel="noopener">General Announcements</a> · Estimates based on the General Announcements, not an official audit. <a class="underline decoration-zinc-300 underline-offset-2 hover:text-zinc-800 dark:decoration-zinc-700 dark:hover:text-zinc-200" href="docs/PROGRAM_FORMAT.md">Add a school or program</a></span>
   </div>
 </footer>
 

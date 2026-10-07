@@ -65,6 +65,7 @@ export default {
   // A major or minor needs the letter grade, so the Registrar uncovers a P (on request, or at the final audit).
   // Such courses therefore count, with a notice.
   passFailGrades: ['P'],
+  gradePoints: { 'A+': 4 }, // Rice awards 4.0 grade points for an A+ (ESTHER shows the +, but it does not raise the GPA)
   passFailNotice: (codes) => `${codes.join(', ')} ${codes.length === 1 ? 'was' : 'were'} taken Pass/Fail. ${codes.length === 1 ? 'It counts' : 'They count'} here because the Registrar uncovers the letter grade, on your request or automatically at the final degree audit. Until then DegreeWorks lists ${codes.length === 1 ? 'it' : 'them'} as still needed. An uncovered grade enters your GPA and cannot be covered again.`,
   maxTermHours: 18, // most a student can take in a term without an overload approval
   // Hints for the transcript parser (see js/parser/transcript.js for defaults).

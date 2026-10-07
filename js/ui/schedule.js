@@ -12,7 +12,7 @@ const sectionCache = new Map(); // term -> Promise<Section[]>
 const DAY_ORDER = ['M', 'T', 'W', 'R', 'F', 'S', 'U'];
 const DAY_NAME = { M: 'Mon', T: 'Tue', W: 'Wed', R: 'Thu', F: 'Fri', S: 'Sat', U: 'Sun' };
 const PALETTE = [
-  'bg-blue-100 text-blue-900 dark:bg-blue-900/60 dark:text-blue-100',
+  'bg-rice-100 text-rice-900 dark:bg-rice-900/60 dark:text-rice-100',
   'bg-emerald-100 text-emerald-900 dark:bg-emerald-900/60 dark:text-emerald-100',
   'bg-amber-100 text-amber-900 dark:bg-amber-900/60 dark:text-amber-100',
   'bg-violet-100 text-violet-900 dark:bg-violet-900/60 dark:text-violet-100',
@@ -342,6 +342,6 @@ async function renderCandidates() {
       <div class="min-w-0 flex-1">
         <div class="flex items-baseline gap-1.5"><span class="course-ref cursor-help font-mono text-[12px] font-medium" data-course="${esc(s.code)}" tabindex="0">${esc(s.code)}</span><span class="font-mono text-[10px] text-zinc-400">${esc(s.sec)}</span><span class="min-w-0 truncate text-zinc-600 dark:text-zinc-400">${esc(titleCase(s.title))}</span></div>
         <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-zinc-500"><span class="font-mono">${esc(meetingText(s))}</span><span>${s.credits} hr</span>${s.dist ? `<span class="${dist && dist.need[s.dist] > 0 ? 'rounded bg-amber-50 px-1 font-medium text-amber-700 dark:bg-amber-950 dark:text-amber-300' : ''}" title="${dist && dist.need[s.dist] > 0 ? 'You still need courses in this distribution group' : 'Distribution group'}">D${s.dist === 'I' ? 1 : s.dist === 'II' ? 2 : 3}${dist && dist.need[s.dist] > 0 ? ' needed' : ''}</span>` : ''}${s.instr ? `<span class="truncate">${esc(s.instr.split(' ').slice(0, 2).join(' '))}</span>` : ''}
-          ${tags.map((t) => `<span class="rounded px-1 ${t.kind === 'req' ? 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'}">${esc(t.text)}</span>`).join('')}${prereqTag(s.code)}</div>
+          ${tags.map((t) => `<span class="rounded px-1 ${t.kind === 'req' ? 'bg-rice-50 text-rice-700 dark:bg-rice-950 dark:text-rice-200' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300'}">${esc(t.text)}</span>`).join('')}${prereqTag(s.code)}</div>
       </div></div>`).join('') || '<p class="py-3 text-xs text-zinc-500">No sections match. Loosen a filter or clear the search.</p>';
 }
