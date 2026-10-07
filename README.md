@@ -1,5 +1,9 @@
 # DegreePlanner
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-00205B?style=for-the-badge&logo=github&logoColor=white)](https://ryan-racer.github.io/rice-degree-planner/)
+
+**[Try the live demo](https://ryan-racer.github.io/rice-degree-planner/)** — upload your ESTHER transcript and audit your degree in the browser.
+
 > Rice-branded copy: Rice Blue header and accents with serif display type, a GPA tile with what-if grades, a one-click advising summary, and quick links to ESTHER and the General Announcements.
 
 A front-end-only degree audit and program explorer. Drop in your transcript
