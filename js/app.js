@@ -145,6 +145,7 @@ function initImport() {
   $('#paste-cancel').addEventListener('click', () => { $('#paste-box').hidden = true; });
   $('#parse-btn').addEventListener('click', () => ingest($('#paste-text').value, 'pasted text'));
   $('#sample-btn').addEventListener('click', () => ingest(school.sample || '', 'the sample transcript'));
+  $('#demo-btn').addEventListener('click', () => ingest(school.sample || '', 'the demo transcript'));
   document.addEventListener('paste', (e) => {
     if (['TEXTAREA', 'INPUT', 'SELECT'].includes(document.activeElement?.tagName)) return;
     const t = e.clipboardData?.getData('text');
